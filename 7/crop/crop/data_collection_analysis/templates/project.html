@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - OptiCrop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --primary-dark: #059669;
+            --secondary: #f59e0b;
+            --bg-dark: #030712;
+            --text-main: #f8fafc;
+            --text-light: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(16, 185, 129, 0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body {
+            background: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                        var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: rgba(3, 7, 18, 0.6);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        .nav-brand {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+        .nav-brand i {
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+        .nav-links { display: flex; gap: 0.5rem; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        .nav-links a.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        main {
+            flex: 1;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 3.5rem;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(180deg, var(--glass-highlight) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        h2 {
+            color: #ffffff;
+            font-size: 2.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(16, 185, 129, 0.2);
+            padding-bottom: 1rem;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.15rem;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+        .section-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 2.25rem;
+            margin-bottom: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .section-card:hover {
+            transform: translateX(6px);
+            background: rgba(16, 185, 129, 0.02);
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+        .section-card h3 {
+            margin-top: 0;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-card h3 i {
+            color: var(--primary);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+        .info-list { list-style: none; }
+        .info-list li {
+            margin-bottom: 0.9rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            color: #cbd5e1;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        .info-list li i {
+            color: var(--primary);
+            margin-top: 0.25rem;
+            font-size: 1.1rem;
+        }
+        .info-list li strong {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        footer {
+            background: #020617;
+            color: var(--text-light);
+            text-align: center;
+            padding: 2.5rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+        footer p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="nav-brand"><i class="fa-solid fa-leaf"></i> OptiCrop</a>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('project') }}" class="active">Project</a>
+            <a href="{{ url_for('findyourcrop') }}">Find Your Crop</a>
+        </div>
+    </nav>
+    <main>
+        <div class="glass-card">
+            <h2>OptiCrop: Smart Agricultural Optimization</h2>
+            <p>The project "OptiCrop: Smart Agricultural Production Optimization Engine" develops an advanced software system that utilizes data-driven insights to optimize agricultural production for different crops. By integrating key environmental factors such as Nitrogen (N), Phosphorus (P), Potassium (K) levels, soil temperature, humidity, pH, rainfall, and crop types, OptiCrop provides intelligent recommendations to farmers for maximizing yields and resource efficiency.</p>
+            <p>The knowledge and insights gained through the OptiCrop project can be utilized by agricultural researchers, policymakers, and stakeholders to advance the understanding of crop-environment interactions and inform the development of evidence-based agricultural strategies.</p>
+            
+            <div class="section-card">
+                <h3><i class="fa-solid fa-clipboard-list"></i> Project Objectives</h3>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-circle-check"></i> Develop a machine learning model to predict suitable crops based on environmental conditions.</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Analyze and preprocess agricultural data to ensure model accuracy.</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Create an intuitive, modern web interface for farmers.</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Implement clustering analysis to group similar crops based on environmental requirements.</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Provide actionable insights for agricultural optimization.</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Build a scalable system supporting 22 different crop varieties.</li>
+                </ul>
+            </div>
+            
+            <div class="section-card">
+                <h3><i class="fa-solid fa-sparkles"></i> Key Features</h3>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-bolt"></i> <strong>Data-driven crop recommendations</strong> based on soil and environmental parameters.</li>
+                    <li><i class="fa-solid fa-bolt"></i> <strong>Machine learning powered prediction engine</strong> with 96.36% accuracy.</li>
+                    <li><i class="fa-solid fa-bolt"></i> <strong>User-friendly web interface</strong> built with modern glassmorphism design.</li>
+                    <li><i class="fa-solid fa-bolt"></i> <strong>Real-time analysis</strong> of multiple environmental factors.</li>
+                    <li><i class="fa-solid fa-bolt"></i> <strong>Support for 22 crop varieties</strong> including cereals, pulses, and cash crops.</li>
+                </ul>
+            </div>
+            
+            <div class="section-card">
+                <h3><i class="fa-solid fa-database"></i> Dataset Information</h3>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-chart-pie"></i> <strong>Total Samples:</strong> 2,200+ agricultural records</li>
+                    <li><i class="fa-solid fa-chart-pie"></i> <strong>Features:</strong> 7 environmental factors (N, P, K, Temperature, Humidity, pH, Rainfall)</li>
+                    <li><i class="fa-solid fa-chart-pie"></i> <strong>Crop Classes:</strong> 22 different crop varieties</li>
+                    <li><i class="fa-solid fa-chart-pie"></i> <strong>Model Accuracy:</strong> Training: 97.50% | Testing: 96.36%</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 OptiCrop - Smart Agricultural Optimization Using ML | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
