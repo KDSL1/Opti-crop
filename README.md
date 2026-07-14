@@ -55,3 +55,11 @@ pip install flask scikit-learn pandas numpy jupyter
 A full walk-through of the application's user interface and crop prediction features can be found below:
 *   [Demo Video (MP4)](demo_video.mp4)
 *   [Demo Video (WebM)](demo_video.webm)
+
+---
+
+## 👥 Contributors
+
+*   **Divya Sreelekha**
+*   **KDSL1** ([GitHub Profile](https://github.com/KDSL1))
+
